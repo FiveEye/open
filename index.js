@@ -3,11 +3,11 @@ import {Buffer} from 'node:buffer';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import childProcess from 'node:child_process';
-import fs, {constants as fsConstants} from 'node:fs/promises';
 import isWsl from 'is-wsl';
 import defineLazyProperty from 'define-lazy-prop';
 import defaultBrowser from 'default-browser';
 import isInsideContainer from 'is-inside-container';
+import * as fs from 'node:fs/promises';
 
 // Path to included `xdg-open`.
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -38,7 +38,7 @@ const getWslDrivesMountPoint = (() => {
 
 		let isConfigFileExists = false;
 		try {
-			await fs.access(configFilePath, fsConstants.F_OK);
+			await fs.access(configFilePath, fs.constants.F_OK);
 			isConfigFileExists = true;
 		} catch {}
 
@@ -217,7 +217,7 @@ const baseOpen = async options => {
 			// Check if local `xdg-open` exists and is executable.
 			let exeLocalXdgOpen = false;
 			try {
-				await fs.access(localXdgOpenPath, fsConstants.X_OK);
+				await fs.access(localXdgOpenPath, fs.constants.X_OK);
 				exeLocalXdgOpen = true;
 			} catch {}
 
